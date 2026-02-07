@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نموذج التسجيل في الدورة المكثفة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>نموذج التسجيل</h1>
+    <nav>
+      <a href="index.html">الرئيسية</a>
+      <a href="course.html">الدورة المكثفة</a>
+    </nav>
+  </header>
+  <section class="section">
+    <form id="regForm" class="card">
+      <label>الاسم الكامل:</label>
+      <input type="text" id="regName" required><br>
+      <label>رقم الجوال:</label>
+      <input type="text" id="regPhone" required><br>
+      <label>المدينة:</label>
+      <input type="text" id="regCity"><br>
+      <label>موعد الاختبار:</label>
+      <input type="text" id="regExam" placeholder="مثال: 20/02/2026"><br>
+      <label>الدرجة الحالية:</label>
+      <input type="text" id="regScoreCurrent"><br>
+      <label>الدرجة المستهدفة:</label>
+      <input type="text" id="regScoreTarget"><br>
+      <label>الخطة (من صفحة النتائج):</label>
+      <textarea id="regPlan" placeholder="انسخ خطتك هنا"></textarea><br>
+      <label>إيصال التحويل البنكي:</label>
+      <input type="file" id="regReceipt" accept="image/*"><br>
+      <button type="submit" class="button">إرسال التسجيل عبر تلجرام</button>
+    </form>
+  </section>
+  <script src="assets/js/site-data.js"></script>
+  <script>
+    document.getElementById('regForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value;
+      const phone = document.getElementById('regPhone').value;
+      const city = document.getElementById('regCity').value;
+      const exam = document.getElementById('regExam').value;
+      const scoreCurrent = document.getElementById('regScoreCurrent').value;
+      const scoreTarget = document.getElementById('regScoreTarget').value;
+      const plan = document.getElementById('regPlan').value;
+      const message =
+        'السلام عليكم، أود التسجيل في الدورة المكثفة.\n' +
+        'الاسم: ' + name + '\n' +
+        'الجوال: ' + phone + '\n' +
+        'المدينة: ' + city + '\n' +
+        'موعد الاختبار: ' + exam + '\n' +
+        'الدرجة الحالية: ' + scoreCurrent + '\n' +
+        'الدرجة المستهدفة: ' + scoreTarget + '\n' +
+        'الخطة: ' + plan + '\n';
+      const encoded = encodeURIComponent(message);
+      window.open('https://t.me/' + SITE_DATA.telegram + '?text=' + encoded, '_blank');
+    });
+  </script>
+</body>
+</html>

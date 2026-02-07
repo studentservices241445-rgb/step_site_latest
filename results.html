@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نتيجة الاختبار – STEP 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>نتيجة الاختبار</h1>
+  </header>
+  <section class="section" id="resultSection">
+    <div class="card" id="summary"></div>
+    <div class="card" id="analysis"></div>
+    <div class="card" id="planText"></div>
+    <div class="card" id="tableLink"></div>
+    <button class="button" id="copyPlan">نسخ الخطة</button>
+    <button class="button" id="sharePlan">مشاركة الخطة</button>
+    <div id="options" class="card"></div>
+  </section>
+  <script src="assets/js/site-data.js"></script>
+  <script>
+    const result = JSON.parse(localStorage.getItem('ayed_last_result')) || null;
+    const profile = JSON.parse(localStorage.getItem('ayed_profile')) || {};
+    if (!result) {
+      document.getElementById('resultSection').innerHTML = '<p>لا توجد نتيجة. يرجى إجراء الاختبار أولاً.</p><a href="start.html" class="button">ابدأ الاختبار</a>';
+    } else {
+      const totalPercent = Math.round((result.correct / result.total) * 100);
+      document.getElementById('summary').innerHTML = `<h3>درجتك العامة: ${totalPercent}%</h3>`;
+      // تحليل الأقسام
+      let analysisHTML = '<h4>تحليل الأقسام</h4><ul>';
+      for (const sec in result.bySection) {
+        const s = result.bySection[sec];
+        const perc = Math.round((s.correct / s.total) * 100);
+        analysisHTML += `<li>${sec}: ${perc}% (${s.correct}/${s.total})</li>`;
+      }
+      analysisHTML += '</ul>';
+      document.getElementById('analysis').innerHTML = analysisHTML;
+      // إنشاء خطة نصية بسيطة
+      const planDesc = [];
+      if (profile.exam === '24h') planDesc.push('باقي أقل من 24 ساعة، ركّز على أهم الاستراتيجيات وراجع النماذج المتكررة.');
+      else if (profile.exam === '3d') planDesc.push('خلال ثلاثة أيام، وزّع وقتك بين القواعد والقراءة والاستماع، ولا تهمل النماذج.');
+      else if (profile.exam === '7d') planDesc.push('خلال أسبوع، اتبع خطة 7 أيام وابدأ بالمحاضرات التمهيدية ثم الأقسام كلها.');
+      else if (profile.exam === '15d') planDesc.push('استخدم خطة 15 يوم لتقسيم المحاضرات والملفات والنماذج.');
+      else if (profile.exam === '30d') planDesc.push('استخدم خطة 30 يوم للتوازن بين التأسيس والتطبيق.');
+      else if (profile.exam === '60d') planDesc.push('استفد من خطة 60 يوم لبناء أساس قوي ثم الانتقال إلى النماذج.');
+      else planDesc.push('استخدم خطة 90 يوم لتعلم متدرج ومراجعات متكررة.');
+      const weakest = profile.weak || 'vocab';
+      const weakText = {
+        vocab: 'ركز على المفردات وتعلم الكلمات مع استخدامها في جمل.',
+        grammar: 'ركز على القواعد والأزمنة، وراجع الاستثناءات بعد إتقان الأساسيات.',
+        reading: 'ركز على القراءة وحل القطع المتكررة واستراتيجيات الفهم.',
+        listening: 'ركز على الاستماع وتدوين الملاحظات سريعًا.',
+        unknown: 'اكتشف أضعف قسم لديك من خلال تحليل النتيجة وراجع جميع الأقسام.'
+      };
+      planDesc.push(weakText[weakest]);
+      document.getElementById('planText').innerHTML = `<h4>خطة مختصرة</h4><p>${planDesc.join(' ')}</p>`;
+      document.getElementById('tableLink').innerHTML = `<a href="plan.html" class="button">عرض جدول المذاكرة</a>`;
+      document.getElementById('copyPlan').onclick = function() {
+        navigator.clipboard.writeText(planDesc.join(' '));
+        alert('تم نسخ الخطة إلى الحافظة');
+      };
+      document.getElementById('sharePlan').onclick = function() {
+        navigator.clipboard.writeText('هذه خطتي اليومية: ' + planDesc.join(' ') + ' – جرّب البرنامج: ' + window.location.href.replace('results.html','index.html'));
+        alert('تم نسخ رسالة المشاركة');
+      };
+      // خيارات الدورة المكثفة إذا كانت مناسبة
+      const options = document.getElementById('options');
+      if (profile.exam === '24h' || profile.exam === '3d') {
+        options.innerHTML = `<h4>خيارات إضافية</h4><p>موعدك قريب، قد تحتاج إلى دورة مكثفة.</p><a href="course.html" class="button">الدورة المكثفة</a>`;
+      } else {
+        options.innerHTML = '';
+      }
+    }
+  </script>
+</body>
+</html>

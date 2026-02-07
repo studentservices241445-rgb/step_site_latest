@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اختبار STEP 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>اختبار تحديد المستوى</h1>
+  </header>
+  <section class="section" id="testSection">
+    <div id="questionContainer" class="card"></div>
+    <div id="navigation" class="card"></div>
+    <div id="explanation" class="card" style="display:none;"></div>
+    <button id="nextBtn" class="button" style="display:none;">التالي</button>
+  </section>
+  <script>
+    let questions = [];
+    let current = 0;
+    let answers = [];
+    fetch('assets/questions.json').then(r => r.json()).then(data => {
+      questions = data;
+      showQuestion(0);
+    });
+    function showQuestion(index) {
+      current = index;
+      const q = questions[index];
+      const container = document.getElementById('questionContainer');
+      container.innerHTML = `<h4>سؤال ${index+1}/${questions.length}</h4><p>${q.prompt}</p>`;
+      q.choices.forEach((c, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'button';
+        btn.innerText = c;
+        btn.onclick = () => chooseAnswer(i);
+        container.appendChild(btn);
+      });
+    }
+    function chooseAnswer(i) {
+      answers[current] = i;
+      const q = questions[current];
+      const explanation = document.getElementById('explanation');
+      explanation.style.display = 'block';
+      if (i === q.answerIndex) {
+        explanation.innerHTML = `<p>إجابة صحيحة ✅</p><p>${q.explain_ar}</p>`;
+      } else {
+        explanation.innerHTML = `<p>إجابة خاطئة ❌</p><p>${q.explain_ar}</p>`;
+      }
+      document.getElementById('nextBtn').style.display = 'inline-block';
+    }
+    document.getElementById('nextBtn').onclick = () => {
+      document.getElementById('explanation').style.display = 'none';
+      document.getElementById('nextBtn').style.display = 'none';
+      if (current < questions.length - 1) {
+        showQuestion(current + 1);
+      } else {
+        finishTest();
+      }
+    };
+    function finishTest() {
+      const results = { total: questions.length, correct: 0, bySection: {} };
+      questions.forEach((q, idx) => {
+        const correct = answers[idx] === q.answerIndex;
+        if (correct) results.correct++;
+        if (!results.bySection[q.section]) results.bySection[q.section] = { total: 0, correct: 0 };
+        results.bySection[q.section].total++;
+        if (correct) results.bySection[q.section].correct++;
+      });
+      localStorage.setItem('ayed_last_result', JSON.stringify(results));
+      const now = Date.now();
+      localStorage.setItem('ayed_attempt_lock', JSON.stringify({ lastCompletedAt: now }));
+      window.location.href = 'results.html';
+    }
+  </script>
+</body>
+</html>

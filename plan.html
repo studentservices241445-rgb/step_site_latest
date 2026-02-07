@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جدول المذاكرة – STEP 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>جدول المذاكرة</h1>
+  </header>
+  <section class="section" id="planSection">
+    <div id="planContainer" class="card"></div>
+    <button class="button" id="download">تنزيل PDF</button>
+  </section>
+  <script src="assets/js/site-data.js"></script>
+  <script>
+    const profile = JSON.parse(localStorage.getItem('ayed_profile')) || {};
+    fetch('assets/plans.json').then(r => r.json()).then(plans => {
+      let plan;
+      switch (profile.exam) {
+        case '24h': plan = plans.one_day; break;
+        case '3d': plan = plans.three_days; break;
+        case '7d': plan = plans.seven_days; break;
+        default: plan = plans.seven_days;
+      }
+      const cont = document.getElementById('planContainer');
+      cont.innerHTML = `<h3>${plan.title}</h3><p>${plan.description}</p>`;
+      plan.tasks.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `<strong>اليوم ${item.day}:</strong> ${item.task} – ${item.duration}`;
+        cont.appendChild(div);
+      });
+    });
+    document.getElementById('download').onclick = function() {
+      alert('سيتم دعم تحميل PDF في الإصدار القادم.');
+    };
+  </script>
+</body>
+</html>

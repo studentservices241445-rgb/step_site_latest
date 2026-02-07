@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>جمع البيانات – STEP 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>استبيان قبل الاختبار</h1>
+    <nav>
+      <a href="index.html">الرئيسية</a>
+    </nav>
+  </header>
+  <section class="section">
+    <form id="startForm">
+      <div class="card">
+        <label>الاسم:</label>
+        <input type="text" id="name" required>
+      </div>
+      <div class="card">
+        <label>هدفك من الاختبار:</label>
+        <select id="goal">
+          <option value="plan">تنظيم خطة</option>
+          <option value="level">قياس مستوى</option>
+          <option value="raise">رفع الدرجة</option>
+          <option value="emergency">تحضير سريع لاختبار قريب</option>
+        </select>
+      </div>
+      <div class="card">
+        <label>موعد الاختبار:</label>
+        <select id="exam">
+          <option value="24h">أقل من 24 ساعة</option>
+          <option value="3d">3 أيام</option>
+          <option value="7d">7 أيام</option>
+          <option value="15d">15 يومًا</option>
+          <option value="30d">30 يومًا</option>
+          <option value="60d">60 يومًا</option>
+          <option value="90d">90 يومًا</option>
+        </select>
+      </div>
+      <div class="card">
+        <label>الوقت اليومي للمذاكرة:</label>
+        <select id="daily">
+          <option value="30">15–30 دقيقة</option>
+          <option value="60">30–60 دقيقة</option>
+          <option value="90">60–90 دقيقة</option>
+          <option value="120">أكثر من 90 دقيقة</option>
+        </select>
+      </div>
+      <div class="card">
+        <label>أضعف قسم تتوقعه:</label>
+        <select id="weak">
+          <option value="vocab">المفردات</option>
+          <option value="grammar">القواعد</option>
+          <option value="reading">القراءة</option>
+          <option value="listening">الاستماع</option>
+          <option value="unknown">دع الاختبار يحدد</option>
+        </select>
+      </div>
+      <div class="card">
+        <label>هل سبق لك الالتحاق بدورة؟</label>
+        <select id="courseHistory">
+          <option value="no">لا</option>
+          <option value="yes">نعم</option>
+        </select>
+      </div>
+      <div class="card" id="courseFeedback" style="display:none;">
+        <label>ما السلبيات التي واجهتها؟</label><br>
+        <input type="checkbox" value="no_update"> عدم تحديث المحتوى<br>
+        <input type="checkbox" value="no_plan"> خطة غير واضحة<br>
+        <input type="checkbox" value="slow_support"> دعم بطيء<br>
+        <input type="checkbox" value="distraction"> محتوى مشتت<br>
+      </div>
+      <div class="card">
+        <label>من أين عرفت البرنامج؟</label>
+        <select id="source">
+          <option value="friend">من صديق</option>
+          <option value="group">من قروب</option>
+          <option value="telegram">تيليجرام</option>
+          <option value="twitter">إكس</option>
+          <option value="instagram">إنستغرام</option>
+          <option value="search">بحث جوجل</option>
+          <option value="other">أخرى</option>
+        </select>
+      </div>
+      <div class="card">
+        <label>ملاحظات إضافية:</label>
+        <textarea id="notes" rows="3"></textarea>
+      </div>
+      <button type="submit" class="button">ابدأ الاختبار</button>
+    </form>
+  </section>
+  <script src="assets/js/site-data.js"></script>
+  <script>
+    const courseHistory = document.getElementById('courseHistory');
+    const courseFeedback = document.getElementById('courseFeedback');
+    courseHistory.addEventListener('change', () => {
+      courseFeedback.style.display = courseHistory.value === 'yes' ? 'block' : 'none';
+    });
+    document.getElementById('startForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById('name').value,
+        goal: document.getElementById('goal').value,
+        exam: document.getElementById('exam').value,
+        daily: document.getElementById('daily').value,
+        weak: document.getElementById('weak').value,
+        courseHistory: document.getElementById('courseHistory').value,
+        feedback: Array.from(courseFeedback.querySelectorAll('input:checked')).map(c => c.value),
+        source: document.getElementById('source').value,
+        notes: document.getElementById('notes').value
+      };
+      localStorage.setItem('ayed_profile', JSON.stringify(data));
+      window.location.href = 'test.html';
+    });
+  </script>
+</body>
+</html>

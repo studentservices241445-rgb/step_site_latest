@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اختبار STEP 2026 – أكاديمية عايد الرسمية</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>اختبار STEP 2026 – أكاديمية عايد الرسمية</h1>
+    <nav>
+      <a href="index.html">الرئيسية</a>
+      <a href="start.html">ابدأ الاختبار</a>
+      <a href="quiz.html">إنشاء كويز</a>
+      <a href="course.html">الدورة المكثفة</a>
+      <a href="support.html">الدعم</a>
+    </nav>
+  </header>
+  <section class="hero">
+    <h2>اختبر مستواك وضع خطتك</h2>
+    <p>برنامج مجاني يساعدك على معرفة نقاط قوتك وضعفك ويمنحك خطة مذاكرة وجداول معدة مسبقًا.</p>
+    <a href="start.html" class="button">ابدأ الآن</a>
+    <a href="quiz.html" class="button">كويز سريع</a>
+    <a href="#" class="button" onclick="installPWA()">تثبيت التطبيق</a>
+    <a href="#" class="button" onclick="shareProgram()">شارك البرنامج</a>
+  </section>
+  <section class="section">
+    <h3>ماذا يقدم البرنامج؟</h3>
+    <div class="card">
+      <h4>اختبار تحديد المستوى</h4>
+      <p>يتكون من ٥٠ سؤالًا في المفردات والقواعد والقراءة والاستماع مع تصحيح فوري.</p>
+    </div>
+    <div class="card">
+      <h4>خطة وجداول جاهزة</h4>
+      <p>يبني لك جدول مذاكرة يومي حسب وقتك وأضعف قسم لديك بناءً على فهرس الدورة المكثفة.</p>
+    </div>
+    <div class="card">
+      <h4>كويزات قابلة للمشاركة</h4>
+      <p>اصنع كويزات قصيرة وانشرها مع زملائك لتحسن مهاراتك باستمرار.</p>
+    </div>
+    <div class="card">
+      <h4>الدورة المكثفة</h4>
+      <p>لمن يحتاج متابعة وتكثيف، يقدم البرنامج رابط دورة عايد المكثفة مع خيارات الدفع السهلة.</p>
+    </div>
+  </section>
+  <section class="section" id="reviews">
+    <h3>تقييمات الطلاب</h3>
+    <div id="reviewsContainer"></div>
+  </section>
+  <section class="section" id="faq">
+    <h3>أسئلة شائعة</h3>
+    <div class="card">
+      <strong>هل البرنامج مجاني؟</strong>
+      <p>نعم، البرنامج بالكامل مجاني ويمكنك استخدامه قدر ما تشاء.</p>
+    </div>
+    <div class="card">
+      <strong>هل الأسئلة رسمية؟</strong>
+      <p>هي أسئلة تدريبية تحاكي نمط اختبار STEP، وليست من الامتحانات الرسمية.</p>
+    </div>
+    <div class="card">
+      <strong>كيف أحصل على الخطة؟</strong>
+      <p>بعد الانتهاء من الاختبار تظهر لك خطة نصية وجدول مذاكرة يمكنك نسخها وتحميلها.</p>
+    </div>
+    <div class="card">
+      <strong>كيف أشارك البرنامج؟</strong>
+      <p>استخدم زر المشاركة أعلاه لنسخ رسالة تسويقية جميلة وإرسالها لزملائك.</p>
+    </div>
+  </section>
+  <footer>
+    <p>&copy; 2026 أكاديمية عايد الرسمية – جميع الحقوق محفوظة</p>
+  </footer>
+  <script src="assets/js/site-data.js"></script>
+  <script>
+    // Load reviews
+    fetch('assets/reviews.json').then(r => r.json()).then(data => {
+      const container = document.getElementById('reviewsContainer');
+      data.forEach(r => {
+        const div = document.createElement('div');
+        div.className = 'card';
+        div.innerHTML = `<strong>${r.name}</strong><p>${r.message}</p>`;
+        container.appendChild(div);
+      });
+    });
+    function installPWA() {
+      alert('سيتم دعم التثبيت قريبًا، يرجى استخدام خيار Add to Home Screen من المتصفح.');
+    }
+    function shareProgram() {
+      navigator.clipboard.writeText('اختبار STEP 2026 من أكاديمية عايد الرسمية – برنامج مجاني يحدد مستواك ويضع لك خطة مذاكرة. جربه الآن!');
+      alert('تم نسخ رسالة المشاركة إلى الحافظة');
+    }
+  </script>
+</body>
+</html>

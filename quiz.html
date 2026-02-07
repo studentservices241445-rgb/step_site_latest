@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إنشاء كويز – STEP 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>إنشاء كويز</h1>
+  </header>
+  <section class="section">
+    <form id="quizForm" class="card">
+      <label>اختر القسم:</label>
+      <select id="quizSection">
+        <option value="Vocabulary">المفردات</option>
+        <option value="Grammar">القواعد</option>
+        <option value="Reading">القراءة</option>
+        <option value="Listening">الاستماع</option>
+      </select><br>
+      <label>عدد الأسئلة:</label>
+      <input type="number" id="quizCount" value="3" min="1" max="5"><br>
+      <button type="submit" class="button">ابدأ الكويز</button>
+    </form>
+    <div id="quizContainer" class="card"></div>
+    <div id="quizSummary" class="card"></div>
+    <button id="shareQuiz" class="button" style="display:none;">مشاركة الكويز</button>
+  </section>
+  <script>
+    let quizData = [];
+    let quizAnswers = [];
+    document.getElementById('quizForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const section = document.getElementById('quizSection').value;
+      const count = parseInt(document.getElementById('quizCount').value);
+      fetch('assets/questions.json').then(r => r.json()).then(all => {
+        quizData = all.filter(q => q.section === section).slice(0, count);
+        quizAnswers = [];
+        showQuizQuestion(0);
+      });
+    });
+    function showQuizQuestion(index) {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = '';
+      if (index >= quizData.length) {
+        const correct = quizAnswers.filter(a => a.correct).length;
+        document.getElementById('quizSummary').innerHTML = `<p>انتهى الكويز: الدرجة ${correct}/${quizData.length}</p>`;
+        document.getElementById('shareQuiz').style.display = 'inline-block';
+        return;
+      }
+      const q = quizData[index];
+      container.innerHTML = `<h4>سؤال ${index+1}/${quizData.length}</h4><p>${q.prompt}</p>`;
+      q.choices.forEach((c, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'button';
+        btn.innerText = c;
+        btn.onclick = () => {
+          quizAnswers[index] = { selected: i, correct: i === q.answerIndex };
+          showQuizQuestion(index + 1);
+        };
+        container.appendChild(btn);
+      });
+    }
+    document.getElementById('shareQuiz').onclick = function() {
+      navigator.clipboard.writeText('لقد أجريت كويز قسم ' + document.getElementById('quizSection').value + ' على اختبار STEP 2026 – جرب أنت أيضًا: ' + window.location.href);
+      alert('تم نسخ رابط مشاركة الكويز');
+    };
+  </script>
+</body>
+</html>
