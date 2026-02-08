@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "section": "Vocabulary",
+    "difficulty": 2,
+    "prompt": "What is the synonym of 'rapid'?",
+    "choices": ["quick", "slow", "small", "late"],
+    "answerIndex": 0,
+    "explain_ar": "المرادف لكلمة rapid هو quick، أي سريع."
+  },
+  {
+    "id": 2,
+    "section": "Grammar",
+    "difficulty": 2,
+    "prompt": "Choose the correct form: She ____ to school every day.",
+    "choices": ["go", "goes", "went", "gone"],
+    "answerIndex": 1,
+    "explain_ar": "نستخدم الفعل مع \"s\" في المضارع البسيط مع ضمير الغائب المفرد، لذا الإجابة هي goes."
+  },
+  {
+    "id": 3,
+    "section": "Reading",
+    "difficulty": 3,
+    "prompt": "In the passage, what does the author imply about environmental pollution?",
+    "choices": ["It is inevitable", "It is decreasing", "It affects health", "It improves economy"],
+    "answerIndex": 2,
+    "explain_ar": "في القطعة، يشير الكاتب إلى أن التلوث يؤثر على الصحة."
+  },
+  {
+    "id": 4,
+    "section": "Listening",
+    "difficulty": 1,
+    "prompt": "You will hear: 'The meeting will start at eight.' When will the meeting start?",
+    "choices": ["8:00", "8:30", "9:00", "8:15"],
+    "answerIndex": 0,
+    "explain_ar": "يقول المتحدث أن الاجتماع سيبدأ عند الساعة الثامنة، أي 8:00."
+  },
+  {
+    "id": 5,
+    "section": "Vocabulary",
+    "difficulty": 1,
+    "prompt": "Choose the antonym of 'difficult'.",
+    "choices": ["hard", "simple", "complex", "tough"],
+    "answerIndex": 1,
+    "explain_ar": "عكس كلمة difficult هو simple أي سهل."
+  }
+]

@@ -1,0 +1,7 @@
+[
+  {"module":"Preliminary","lesson":"المقدمة وخطة الدورة","type":"lecture","estMin":30,"tags":["#AYED_STEP_PRE_INTRO"],"recommendedFor":"جميع الطلاب"},
+  {"module":"Grammar","lesson":"المضارع البسيط والمستمر","type":"lecture","estMin":40,"tags":["#AYED_STEP_GRA_PRESENT"],"recommendedFor":"قسم القواعد"},
+  {"module":"Grammar","lesson":"الأزمنة التامة – الماضي والحاضر","type":"lecture","estMin":45,"tags":["#AYED_STEP_GRA_PERFECT"],"recommendedFor":"قسم القواعد"},
+  {"module":"Reading","lesson":"استراتيجيات قراءة عامة","type":"lecture","estMin":35,"tags":["#AYED_STEP_READ_STRAT"],"recommendedFor":"قسم القراءة"},
+  {"module":"Listening","lesson":"استراتيجيات الاستماع العامة","type":"lecture","estMin":30,"tags":["#AYED_STEP_LIST_STRAT"],"recommendedFor":"قسم الاستماع"}
+]
